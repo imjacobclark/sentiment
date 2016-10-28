@@ -1,13 +1,17 @@
 {
   "scripts": {
     "start": "node --harmony src/app.js",
-    "test": "node_modules/mocha/bin/mocha --harmony --recursive"
+    "test": "yarn run jshint && ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -u exports -R spec test/src/*/**",
+    "jshint": "node_modules/jshint/bin/jshint --config jshint.conf --exclude-path .gitignore --exclude yarn.lock ./src/*"
   },
   "dependencies": {
     "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
+    "istanbul": "^0.4.5",
     "jshint": "^2.9.4",
     "mocha": "^3.1.2",
     "rewire": "^2.5.2",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "twitter": "^1.4.0"
   }
 }
