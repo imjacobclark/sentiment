@@ -22,9 +22,9 @@ class TwitterAdapter {
         this.client = new Twitter(CONNECTION_DETAILS);
     }
 
-    getTweets() {
+    getTweets(query) {
         return new Promise((resolve) => {
-            return this.client.get('search/tweets', {q: '#appleevent'}, (error, tweets, response) => {
+            return this.client.get('search/tweets', {q: query, count: 100}, (error, tweets, response) => {
                 return resolve(formatTweets(tweets));
             });
         });
