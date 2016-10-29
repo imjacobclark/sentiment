@@ -2,14 +2,17 @@
   "scripts": {
     "start": "node --harmony src/app.js",
     "test": "yarn run jshint && ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -u exports -R spec test/src/*/**",
-    "jshint": "node_modules/jshint/bin/jshint --config jshint.conf --exclude-path .gitignore --exclude yarn.lock ./src/*"
+    "jshint": "node_modules/jshint/bin/jshint --config jshint.conf --exclude-path .gitignore --exclude yarn.lock ./src/*",
+    "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "coveralls": "^2.11.14",
     "istanbul": "^0.4.5",
     "jshint": "^2.9.4",
     "mocha": "^3.1.2",
+    "mocha-lcov-reporter": "^1.2.0",
     "rewire": "^2.5.2",
     "sentiment": "^2.1.0",
     "sinon": "^1.17.6",
