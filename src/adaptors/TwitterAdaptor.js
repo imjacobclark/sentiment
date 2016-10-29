@@ -17,7 +17,7 @@ function formatTweets(tweets) {
     });
 }
 
-class TwitterAdapter {
+class TwitterAdaptor {
     constructor() {
         this.client = new Twitter(CONNECTION_DETAILS);
     }
@@ -31,4 +31,4 @@ class TwitterAdapter {
     }
 }
 
-module.exports = TwitterAdapter;
+module.exports = TwitterAdaptor;

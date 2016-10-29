@@ -2,11 +2,11 @@
 
 let sentiment = require('sentiment');
 
-class TweetSentimentDecorater {
+class TweetSentimentDecorator {
     decorate(tweet) {
         tweet.sentiment = sentiment(tweet.tweet);
         return tweet;
     }
 }
 
-module.exports = TweetSentimentDecorater;
+module.exports = TweetSentimentDecorator;

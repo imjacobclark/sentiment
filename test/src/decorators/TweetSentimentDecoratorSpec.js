@@ -8,16 +8,16 @@ let mocha = require('mocha');
 let rewire = require("rewire");
 let sinon = require('sinon');
 
-let TweetSentimentDecorater = rewire(SOURCE_DIRECTORY + 'decorators/TweetSentimentDecorater');
+let TweetSentimentDecorator = rewire(SOURCE_DIRECTORY + 'decorators/TweetSentimentDecorator');
 
 chai.use(chaiAsPromised);
 
 let expect = chai.expect;
 
-describe('TweetSentimentDecorater', () => {
+describe('TweetSentimentDecorator', () => {
     describe('decorateTweet()', () => {
         it('should decorate a tweet with expected properties', () => {
-            let tweetSentimentDecorater = new TweetSentimentDecorater();
+            let tweetSentimentDecorator = new TweetSentimentDecorator();
 
             let tweet = {
                 'tweet': 'This is amazingly fantastic.'
@@ -35,7 +35,7 @@ describe('TweetSentimentDecorater', () => {
                 }
             };
 
-            let actualResponse = tweetSentimentDecorater.decorate(tweet);
+            let actualResponse = tweetSentimentDecorator.decorate(tweet);
 
             return expect(actualResponse).to.deep.equal(expectedResponse);
         });

@@ -12,13 +12,13 @@ let mocha = require('mocha');
 let rewire = require("rewire");
 let sinon = require('sinon');
 
-let TwitterAdapter = rewire(SOURCE_DIRECTORY + 'adapters/TwitterAdapter');
+let TwitterAdaptor = rewire(SOURCE_DIRECTORY + 'adaptors/TwitterAdaptor');
 
 chai.use(chaiAsPromised);
 
 let expect = chai.expect;
 
-describe('TwitterAdapter', () => {
+describe('TwitterAdaptor', () => {
     describe('getTweets()', () => {
         beforeEach(() => {
             function TwitterMock() {
@@ -31,27 +31,27 @@ describe('TwitterAdapter', () => {
                 }
             }
 
-            TwitterAdapter.__set__("Twitter", TwitterMock);
+            TwitterAdaptor.__set__("Twitter", TwitterMock);
         });
 
         it('should return a JSON object of tweets', () => {
-            let twitterAdapter = new TwitterAdapter();
+            let twitterAdaptor = new TwitterAdaptor();
 
             let expectedResponse = [{
                 'tweet': 'Hello World'
             }];
 
-            let actualResponse = twitterAdapter.getTweets();
+            let actualResponse = twitterAdaptor.getTweets();
 
             return expect(actualResponse).to.eventually.deep.equal(expectedResponse);
         });
 
         it('should map the twitter response property `text` to `tweet`', () => {
-            let twitterAdapter = new TwitterAdapter();
+            let twitterAdaptor = new TwitterAdaptor();
 
             let expectedResponse = 'Hello World';
 
-            return twitterAdapter.getTweets().then(tweets => {
+            return twitterAdaptor.getTweets().then(tweets => {
                 expect(tweets[0].tweet).to.equal(expectedResponse);
             });
         });
@@ -62,13 +62,13 @@ describe('TwitterAdapter', () => {
                 cb(null, CALLBACK_RESPONSE, {});
             }
 
-            TwitterAdapter.__set__("Twitter", TwitterMock);
+            TwitterAdaptor.__set__("Twitter", TwitterMock);
 
             sinon.spy(TwitterMock.prototype, 'get');
 
-            let twitterAdapter = new TwitterAdapter();
+            let twitterAdaptor = new TwitterAdaptor();
 
-            twitterAdapter.getTweets('#appleevent');
+            twitterAdaptor.getTweets('#appleevent');
 
             sinon.assert.calledOnce(TwitterMock.prototype.get.withArgs(sinon.match('search/tweets', { q: '#appleevent', count: 100 }, sinon.match.any)));
         });

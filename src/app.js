@@ -1,11 +1,11 @@
-let TwitterAdapter = require('./adapters/TwitterAdapter');
-let TwitterSentimentDecorator = require('./decorators/TweetSentimentDecorater');
+let TwitterAdaptor = require('./adaptors/TwitterAdaptor');
+let TwitterSentimentDecorator = require('./decorators/TweetSentimentDecorator');
 
 let totalScore = 0;
 let positiveWords = [];
 let negativeWords = [];
 
-let twitterAdapter = new TwitterAdapter().getTweets("#brexit").then(tweets => {
+let twitterAdaptor = new TwitterAdaptor().getTweets("@producthunt").then(tweets => {
     tweets.map(tweet => {
         return new TwitterSentimentDecorator().decorate(tweet);
     }).forEach(tweet => {
