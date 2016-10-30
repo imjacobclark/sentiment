@@ -1,3 +1,5 @@
+'use strict';
+
 let TwitterAdaptor = require('./adaptors/TwitterAdaptor');
 let TwitterSentimentDecorator = require('./decorators/TweetSentimentDecorator');
 
