@@ -17,4 +17,4 @@ script:
   - yarn test
 after_success:
   - yarn run coveralls
-  - codeclimate-test-reporter < lcov.info
+  - codeclimate-test-reporter < coverage/lcov.info
