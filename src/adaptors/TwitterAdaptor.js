@@ -1,3 +1,4 @@
+/*global Promise:true */
 'use strict';
 
 const CONNECTION_DETAILS = {
@@ -6,6 +7,8 @@ const CONNECTION_DETAILS = {
     access_token_key: process.env.TWITTER_ACCESS_TOKEN_KEY,
     access_token_secret: process.env.TWITTER_ACCESS_TOKEN_SECRET
 };
+
+Promise = require('bluebird');
 
 let Twitter = require('twitter');
 
@@ -17,16 +20,23 @@ function formatTweets(tweets) {
     });
 }
 
-class TwitterAdaptor {
-    constructor() {
-        this.client = new Twitter(CONNECTION_DETAILS);
-    }
+function getTweet(query) {
+    return new Promise(resolve => {
+        let client = new Twitter(CONNECTION_DETAILS);
+        return client.get('search/tweets', {q: query, count: 100}, (error, tweets, response) => {
+            return resolve(formatTweets(tweets));
+        });
+    });
+}
 
-    getTweets(query) {
+class TwitterAdaptor {
+    getTweets(query, count) {
         return new Promise((resolve) => {
-            return this.client.get('search/tweets', {q: query, count: 100}, (error, tweets, response) => {
-                return resolve(formatTweets(tweets));
-            });
+            let tweetPromises = [];
+            for(let i = 0; i < count; i++){
+                tweetPromises.push(getTweet(query));
+            }
+            return resolve(tweetPromises);
         });
     }
 }

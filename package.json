@@ -6,6 +6,7 @@
     "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
   },
   "dependencies": {
+    "bluebird": "^3.4.6",
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "coveralls": "^2.11.14",
