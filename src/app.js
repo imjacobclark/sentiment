@@ -11,7 +11,7 @@ let positiveWords = [];
 let negativeWords = [];
 
 let twitterAdaptor = new TwitterAdaptor().getTweets("@producthunt", 10).all().then(tweets => {
-    tweets = [].concat.apply([], tweets)
+    tweets = [].concat.apply([], tweets);
     
     tweets.map(tweet => {
         return new TwitterSentimentDecorator().decorate(tweet);
