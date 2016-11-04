@@ -21,11 +21,17 @@ function formatTweets(tweets) {
 }
 
 function getTweet(query) {
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
         let client = new Twitter(CONNECTION_DETAILS);
         return client.get('search/tweets', {q: query, count: 100}, (error, tweets, response) => {
+            if(error){
+                return reject(new Error('Twitter API Error ' + error[0].message));
+            }
+
             return resolve(formatTweets(tweets));
         });
+    }).catch(e => { 
+        return [];
     });
 }
 

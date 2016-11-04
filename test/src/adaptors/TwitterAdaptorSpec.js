@@ -95,5 +95,24 @@ describe('TwitterAdaptor', () => {
 
             sinon.assert.callCount(TwitterMock.prototype.get.withArgs(sinon.match('search/tweets', { q: '#appleevent', count: 100 }, sinon.match.any)), 2);
         });
+
+        it('should handle throw an error if unable to get tweets from Twitter', () => {
+            let TwitterMock = function(){}
+            TwitterMock.prototype.get = function(path, query, cb) {
+                cb([{'message': 'error'}], CALLBACK_RESPONSE, {});
+            }
+
+            TwitterAdaptor.__set__("Twitter", TwitterMock);
+
+            sinon.spy(TwitterMock.prototype, 'get');
+
+            let twitterAdaptor = new TwitterAdaptor();
+
+            let expectedResponse = [
+                []
+            ];
+
+            expect(twitterAdaptor.getTweets('#appleevent', 1).all()).to.eventually.deep.equal(expectedResponse);
+        });
     });
 });
