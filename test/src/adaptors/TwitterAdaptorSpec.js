@@ -3,9 +3,13 @@
 
 const SOURCE_DIRECTORY = '../../../src/';
 
-const CALLBACK_RESPONSE = { 'statuses': [{
-    'text': 'Hello World'
-}]}
+const CALLBACK_RESPONSE = [{
+    'text': 'Hello World',
+    'created_at': new Date().toString()
+},{
+    'text': 'Hello World',
+    'created_at': 'Fri Nov 25 2016 12:00:00 GMT+0000 (GMT)'
+}];
 
 Promise = require('bluebird');
 
@@ -37,7 +41,7 @@ describe('TwitterAdaptor', () => {
             TwitterAdaptor.__set__("Twitter", TwitterMock);
         });
 
-        it('should return a JSON object of tweets', () => {
+        it('should return a JSON array of objects with a single tweet property wrapped as a promise', () => {
             let twitterAdaptor = new TwitterAdaptor();
 
             let expectedResponse = [
@@ -49,6 +53,7 @@ describe('TwitterAdaptor', () => {
             ];
 
             let actualResponse = twitterAdaptor.getTweets('test', 1);
+            
             return expect(Promise.all(actualResponse)).to.eventually.deep.equal(expectedResponse);
         });
 
@@ -74,9 +79,9 @@ describe('TwitterAdaptor', () => {
 
             let twitterAdaptor = new TwitterAdaptor();
 
-            twitterAdaptor.getTweets('#appleevent', 1);
+            twitterAdaptor.getTweets('imjacobclark', 1);
 
-            sinon.assert.called(TwitterMock.prototype.get.withArgs(sinon.match('search/tweets', { q: '#appleevent', count: 100 }, sinon.match.any)));
+            sinon.assert.called(TwitterMock.prototype.get.withArgs(sinon.match('statuses/user_timeline', {screen_name: 'imjacobclark', count: 100, include_rts: false}, sinon.match.any)));
         });
 
         it('should call the twitter API an expected amount of times', () => {
@@ -91,9 +96,9 @@ describe('TwitterAdaptor', () => {
 
             let twitterAdaptor = new TwitterAdaptor();
 
-            twitterAdaptor.getTweets('#appleevent', 2);
+            twitterAdaptor.getTweets('imjacobclark', 2);
 
-            sinon.assert.callCount(TwitterMock.prototype.get.withArgs(sinon.match('search/tweets', { q: '#appleevent', count: 100 }, sinon.match.any)), 2);
+            sinon.assert.callCount(TwitterMock.prototype.get.withArgs(sinon.match('statuses/user_timeline', {screen_name: 'imjacobclark', count: 100, include_rts: false}, sinon.match.any)), 2);
         });
 
         it('should handle throw an error if unable to get tweets from Twitter', () => {

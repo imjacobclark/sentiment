@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node --harmony src/app.js",
+    "start": "node --harmony index.js",
     "test": "yarn run jshint && ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha -- -u exports -R spec test/src/*/**",
     "jshint": "node_modules/jshint/bin/jshint --config jshint.conf --exclude-path .gitignore --exclude yarn.lock ./src/*",
     "coveralls": "npm run test -- --report lcovonly && cat ./coverage/lcov.info | coveralls"
